@@ -189,8 +189,10 @@ def test_media_and_design():
         'dark theme': 'html.dark body',
         'mobile layout': '@media (max-width: 767px)',
         'compact mobile outline': 'max-height: 18rem !important',
-        'wider desktop reading grid': '--ci-left-rail-core:',
+        'widescreen desktop reading grid': '--ci-outer-track: 0rem',
         'collapsible desktop rails': 'data-ci-left-hidden',
+        'closed rails reserve no width': '--ci-right-rail-core: 0rem',
+        'MyST branding removed': '.myst-made-with-myst {\n  display: none !important;',
         'reduced-motion support': '@media (prefers-reduced-motion: no-preference)',
     }
     for feature, marker in design_guards.items():

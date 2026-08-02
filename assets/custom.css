@@ -157,12 +157,7 @@ html.dark .myst-primary-sidebar-toc a[aria-current="page"] {
 }
 
 .myst-made-with-myst {
-  opacity: 0.58;
-  transition: opacity 180ms ease;
-}
-
-.myst-made-with-myst:hover {
-  opacity: 1;
+  display: none !important;
 }
 
 .myst-outline {
@@ -577,57 +572,46 @@ html.dark .myst-footer-link {
 
 @media (min-width: 1280px) {
   html {
-    --ci-left-rail-core: 5.25rem;
-    --ci-right-rail-core: 5rem;
-    --ci-body-column-max: 11rem;
+    --ci-outer-track: 0rem;
+    --ci-left-rail-core: 7rem;
+    --ci-right-rail-core: 7rem;
   }
 
   /*
-   * MyST's stock desktop grid reserves broad margins on both sides and caps the
-   * body at roughly 65 characters. Keep its named grid lines so figures,
-   * equations, and asides still land correctly, but give the lesson itself the
-   * majority of the viewport.
+   * Preserve MyST's named grid lines for figures, equations, and asides, but
+   * remove its invisible outer margins. The six flexible body tracks now absorb
+   * every pixel left between the two optional navigation rails.
    */
   .article-grid,
   .xl\:article-grid {
     grid-template-columns:
-      [screen-start] 0.5rem
-      [screen-inset-start] minmax(0, 1fr)
+      [screen-start] var(--ci-outer-track)
+      [screen-inset-start] var(--ci-outer-track)
       [page-start] 0.75rem
       [page-inset-start] var(--ci-left-rail-core)
       [body-outset-start] 0.75rem
       [body-start gutter-left-start] 1rem
-      [body-inset-start] minmax(0, var(--ci-body-column-max))
-      [middle-start] minmax(0, var(--ci-body-column-max))
-      [gutter-left-end] minmax(0, var(--ci-body-column-max))
-      minmax(0, var(--ci-body-column-max))
-      [gutter-right-start] minmax(0, var(--ci-body-column-max))
-      [middle-end] minmax(0, var(--ci-body-column-max))
+      [body-inset-start] minmax(0, 1fr)
+      [middle-start] minmax(0, 1fr)
+      [gutter-left-end] minmax(0, 1fr)
+      minmax(0, 1fr)
+      [gutter-right-start] minmax(0, 1fr)
+      [middle-end] minmax(0, 1fr)
       [body-inset-end] 1rem
       [body-end gutter-right-end] 0.75rem
       [body-outset-end] var(--ci-right-rail-core)
       [page-inset-end] 0.75rem
-      [page-end] minmax(0, 1fr)
-      [screen-inset-end] 0.5rem
+      [page-end] var(--ci-outer-track)
+      [screen-inset-end] var(--ci-outer-track)
       [screen-end] !important;
   }
 
   main.article-grid:has(.myst-outline-section[data-state="closed"]) {
-    --ci-right-rail-core: 1.75rem;
-    --ci-body-column-max: 12rem;
+    --ci-right-rail-core: 0rem;
   }
 
   html:has(.myst-top-nav-menu-button[data-ci-left-hidden="true"]) {
     --ci-left-rail-core: 0rem;
-  }
-
-  html:has(.myst-top-nav-menu-button[data-ci-left-hidden="true"]) main.article-grid {
-    --ci-body-column-max: 12rem;
-  }
-
-  html:has(.myst-top-nav-menu-button[data-ci-left-hidden="true"])
-    main.article-grid:has(.myst-outline-section[data-state="closed"]) {
-    --ci-body-column-max: 13rem;
   }
 
   .myst-top-nav-bar > div:first-child {
@@ -678,7 +662,9 @@ html.dark .myst-footer-link {
 
   html:has(.myst-top-nav-menu-button[data-ci-left-hidden="true"]) .myst-primary-sidebar-nav {
     opacity: 0;
-    transform: translateX(-0.75rem);
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(calc(-100% - 1rem));
   }
 
   article.content > div:has(> .myst-outline-section) {
@@ -686,7 +672,8 @@ html.dark .myst-footer-link {
   }
 
   .myst-outline-section[data-state="closed"] .myst-outline {
-    padding: 0.25rem !important;
+    width: 0 !important;
+    padding: 0 !important;
     margin: 0 !important;
     overflow: visible !important;
     border-left-color: transparent;
@@ -699,6 +686,26 @@ html.dark .myst-footer-link {
     gap: 0;
     margin: 0;
     font-size: 0 !important;
+  }
+
+  .myst-outline-section[data-state="closed"] .myst-outline-header > :not(.myst-outline-collapsible),
+  .myst-outline-section[data-state="closed"] .myst-outline > :not(.myst-outline-header) {
+    display: none !important;
+  }
+
+  .myst-outline-section[data-state="closed"] .myst-outline-collapsible {
+    position: fixed;
+    top: 7rem;
+    right: 1rem;
+    z-index: 30;
+    border: 1px solid var(--ci-rule);
+    border-radius: 3px;
+    background: var(--ci-paper);
+  }
+
+  html.dark .myst-outline-section[data-state="closed"] .myst-outline-collapsible {
+    border-color: rgb(255 255 255 / 14%);
+    background: #111a1d;
   }
 
   .myst-outline-collapsible {
