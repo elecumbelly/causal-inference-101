@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Smoke-test a deployed Causal Inference 101 site."""
 
+import re
 import sys
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlparse
@@ -76,10 +77,10 @@ def main():
         failures.append('homepage title is missing')
     target_host = urlparse(base_url).hostname
     is_local_check = target_host in {'localhost', '127.0.0.1'}
-    if not is_local_check and (
-        b'localhost:3000' in homepage or b'localhost:3100' in homepage
-    ):
+    if not is_local_check and re.search(rb'http://localhost:\d+', homepage):
         failures.append('homepage leaks a local development URL')
+    if not is_local_check and base_url.rstrip('/').encode() not in homepage:
+        failures.append('homepage does not declare the production origin')
 
     if failures:
         for failure in failures:

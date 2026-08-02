@@ -63,8 +63,28 @@ def test_book_config():
     if config.get('site', {}).get('template') != 'book-theme':
         print("FAIL: myst.yml does not select the book theme")
         return False
+    if 'causal-inference-101.vercel.app' not in config.get('site', {}).get('domains', []):
+        print("FAIL: myst.yml does not declare the production domain")
+        return False
 
     print("PASS: Book theme and navigation are configured")
+    return True
+
+
+def test_production_build_config():
+    """Guard the static export against MyST's temporary localhost origin."""
+    package = json.loads((PROJECT_DIR / 'package.json').read_text())
+    build_command = package.get('scripts', {}).get('build', '')
+    origin_script = PROJECT_DIR / 'scripts' / 'set-production-origin.mjs'
+
+    if 'set-production-origin.mjs' not in build_command:
+        print("FAIL: npm build does not normalize the production origin")
+        return False
+    if not origin_script.is_file():
+        print("FAIL: production-origin normalization script is missing")
+        return False
+
+    print("PASS: Production build normalizes MyST's temporary origin")
     return True
 
 def test_lesson_expansion():
@@ -265,6 +285,7 @@ if __name__ == '__main__':
 
     results = []
     results.append(("Book Config", test_book_config()))
+    results.append(("Production Build Config", test_production_build_config()))
     results.append(("Lesson Expansion", test_lesson_expansion()))
     results.append(("Datasets", test_datasets()))
     results.append(("Content Quality", test_content_quality()))

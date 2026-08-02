@@ -60,6 +60,8 @@ project:
 site:
   template: book-theme
   title: "Causal Inference 101"
+  domains:
+    - causal-inference-101.vercel.app
   options:
     logo: assets/logo.png
     style: assets/custom.css

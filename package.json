@@ -4,7 +4,7 @@
   "private": true,
   "description": "A practical, computation-supported introduction to modern causal inference.",
   "scripts": {
-    "build": "myst build --html",
+    "build": "myst build --html && node scripts/set-production-origin.mjs",
     "dev": "myst start",
     "test": "python3 test_all.py"
   },
@@ -12,6 +12,6 @@
     "mystmd": "1.10.1"
   },
   "engines": {
-    "node": ">=20"
+    "node": "24.x"
   }
 }
