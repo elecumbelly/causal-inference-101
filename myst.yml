@@ -1,0 +1,65 @@
+version: 1
+project:
+  title: "Causal Inference 101"
+  description: "From First Principles to Modern Causal Inference"
+  authors:
+    - name: "Causal Inference 101 Contributors"
+  bibliography: references.bib
+  resources:
+    - notebooks/*.ipynb
+    - labs/*.ipynb
+    - solutions/*.ipynb
+  toc:
+    - file: intro.md
+    - title: "Part I: Thinking Causally"
+      children:
+        - file: lessons/01-why-causality-matters.md
+        - file: lessons/02-potential-outcomes.md
+        - file: lessons/03-directed-acyclic-graphs.md
+        - file: lessons/04-confounding.md
+    - title: "Part II: Identification Strategies"
+      children:
+        - file: lessons/05-randomized-controlled-trials.md
+        - file: lessons/06-selection-bias-collider-bias.md
+        - file: lessons/07-regression-causal-adjustment.md
+        - file: lessons/08-propensity-scores.md
+    - title: "Part III: Natural Experiments"
+      children:
+        - file: lessons/09-instrumental-variables.md
+        - file: lessons/10-difference-in-differences.md
+        - file: lessons/11-regression-discontinuity.md
+        - file: lessons/12-synthetic-control.md
+    - title: "Part IV: Advanced Causal Methods"
+      children:
+        - file: lessons/13-mediation-analysis.md
+        - file: lessons/14-heterogeneous-effects.md
+        - file: lessons/15-sensitivity-analysis.md
+        - file: lessons/16-longitudinal-time-varying.md
+    - title: "Part V: Modern Causal Machine Learning"
+      children:
+        - file: lessons/17-structural-causal-models.md
+        - file: lessons/18-causal-discovery.md
+        - file: lessons/19-causal-inference-ml.md
+        - file: lessons/20-bayesian-causal-inference.md
+    - title: "Part VI: Practical Causal Inference"
+      children:
+        - file: lessons/21-external-validity.md
+        - file: lessons/22-decision-theory.md
+        - file: lessons/23-fairness.md
+        - file: lessons/24-capstone-project.md
+    - file: glossary.md
+  exclude:
+    - tmp_expansions/**
+    - _build/**
+    - datasets/**
+    - notebooks/**
+    - labs/**
+    - solutions/**
+    - '*.py'
+
+site:
+  template: book-theme
+  title: "Causal Inference 101"
+  options:
+    logo: assets/logo.png
+    style: assets/custom.css

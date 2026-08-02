@@ -1,0 +1,17 @@
+{
+  "name": "causal-inference-101",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A practical, computation-supported introduction to modern causal inference.",
+  "scripts": {
+    "build": "myst build --html",
+    "dev": "myst start",
+    "test": "python3 test_all.py"
+  },
+  "devDependencies": {
+    "mystmd": "1.10.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
