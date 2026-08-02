@@ -714,6 +714,14 @@ html.dark .myst-footer-link {
     transition: color 160ms ease, background 160ms ease;
   }
 
+  .myst-outline-section[data-state="open"] .myst-outline-collapsible svg {
+    transform: rotate(0deg) !important;
+  }
+
+  .myst-outline-section[data-state="closed"] .myst-outline-collapsible svg {
+    transform: rotate(180deg) !important;
+  }
+
   .myst-outline-collapsible:hover {
     color: var(--ci-teal);
     background: rgb(23 136 127 / 9%);

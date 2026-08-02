@@ -192,6 +192,7 @@ def test_media_and_design():
         'widescreen desktop reading grid': '--ci-outer-track: 0rem',
         'collapsible desktop rails': 'data-ci-left-hidden',
         'closed rails reserve no width': '--ci-right-rail-core: 0rem',
+        'horizontal Contents chevrons': '.myst-outline-section[data-state="open"] .myst-outline-collapsible svg',
         'MyST branding removed': '.myst-made-with-myst {\n  display: none !important;',
         'reduced-motion support': '@media (prefers-reduced-motion: no-preference)',
     }
