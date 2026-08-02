@@ -576,14 +576,140 @@ html.dark .myst-footer-link {
 }
 
 @media (min-width: 1280px) {
+  html {
+    --ci-left-rail-core: 5.25rem;
+    --ci-right-rail-core: 5rem;
+    --ci-body-column-max: 11rem;
+  }
+
+  /*
+   * MyST's stock desktop grid reserves broad margins on both sides and caps the
+   * body at roughly 65 characters. Keep its named grid lines so figures,
+   * equations, and asides still land correctly, but give the lesson itself the
+   * majority of the viewport.
+   */
+  .article-grid,
+  .xl\:article-grid {
+    grid-template-columns:
+      [screen-start] 0.5rem
+      [screen-inset-start] minmax(0, 1fr)
+      [page-start] 0.75rem
+      [page-inset-start] var(--ci-left-rail-core)
+      [body-outset-start] 0.75rem
+      [body-start gutter-left-start] 1rem
+      [body-inset-start] minmax(0, var(--ci-body-column-max))
+      [middle-start] minmax(0, var(--ci-body-column-max))
+      [gutter-left-end] minmax(0, var(--ci-body-column-max))
+      minmax(0, var(--ci-body-column-max))
+      [gutter-right-start] minmax(0, var(--ci-body-column-max))
+      [middle-end] minmax(0, var(--ci-body-column-max))
+      [body-inset-end] 1rem
+      [body-end gutter-right-end] 0.75rem
+      [body-outset-end] var(--ci-right-rail-core)
+      [page-inset-end] 0.75rem
+      [page-end] minmax(0, 1fr)
+      [screen-inset-end] 0.5rem
+      [screen-end] !important;
+  }
+
+  main.article-grid:has(.myst-outline-section[data-state="closed"]) {
+    --ci-right-rail-core: 1.75rem;
+    --ci-body-column-max: 12rem;
+  }
+
+  html:has(.myst-top-nav-menu-button[data-ci-left-hidden="true"]) {
+    --ci-left-rail-core: 0rem;
+  }
+
+  html:has(.myst-top-nav-menu-button[data-ci-left-hidden="true"]) main.article-grid {
+    --ci-body-column-max: 12rem;
+  }
+
+  html:has(.myst-top-nav-menu-button[data-ci-left-hidden="true"])
+    main.article-grid:has(.myst-outline-section[data-state="closed"]) {
+    --ci-body-column-max: 13rem;
+  }
+
+  .myst-top-nav-bar > div:first-child {
+    min-width: calc(var(--ci-left-rail-core) + 1.5rem) !important;
+    margin-right: 0.75rem !important;
+    transition: min-width 220ms ease;
+  }
+
+  .myst-top-nav-bar > div:first-child > div:has(> .myst-top-nav-menu-button) {
+    display: block !important;
+  }
+
+  .myst-top-nav-menu-button {
+    border: 1px solid var(--ci-rule);
+    border-radius: 3px;
+    background: rgb(255 253 247 / 54%);
+    transition: color 160ms ease, border-color 160ms ease, background 160ms ease, transform 160ms ease;
+  }
+
+  .myst-top-nav-menu-button:hover {
+    color: var(--ci-teal) !important;
+    border-color: rgb(23 136 127 / 42%);
+    background: rgb(23 136 127 / 8%);
+    transform: translateX(-1px);
+  }
+
+  html.dark .myst-top-nav-menu-button {
+    border-color: rgb(255 255 255 / 14%);
+    background: rgb(255 255 255 / 4%);
+  }
+
   .myst-primary-sidebar-nav {
-    padding: 1.6rem 0.8rem 1.6rem 0.25rem;
+    padding: 1.6rem 0.25rem;
+    font-size: 0.82rem;
     border-right: 1px solid var(--ci-rule);
     background: linear-gradient(90deg, rgb(255 253 247 / 18%), rgb(255 253 247 / 48%));
+    transition: opacity 180ms ease, transform 220ms ease;
   }
 
   html.dark .myst-primary-sidebar-nav {
     background: linear-gradient(90deg, rgb(255 255 255 / 1%), rgb(255 255 255 / 3.2%));
+  }
+
+  html:has(.myst-top-nav-menu-button[data-ci-left-hidden="true"]) .myst-primary-sidebar-pointer {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  html:has(.myst-top-nav-menu-button[data-ci-left-hidden="true"]) .myst-primary-sidebar-nav {
+    opacity: 0;
+    transform: translateX(-0.75rem);
+  }
+
+  article.content > div:has(> .myst-outline-section) {
+    margin-left: 0.75rem !important;
+  }
+
+  .myst-outline-section[data-state="closed"] .myst-outline {
+    padding: 0.25rem !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    border-left-color: transparent;
+    background: transparent !important;
+    backdrop-filter: none;
+  }
+
+  .myst-outline-section[data-state="closed"] .myst-outline-header {
+    justify-content: center;
+    gap: 0;
+    margin: 0;
+    font-size: 0 !important;
+  }
+
+  .myst-outline-collapsible {
+    min-width: 1.75rem;
+    min-height: 1.75rem;
+    transition: color 160ms ease, background 160ms ease;
+  }
+
+  .myst-outline-collapsible:hover {
+    color: var(--ci-teal);
+    background: rgb(23 136 127 / 9%);
   }
 }
 

@@ -174,7 +174,12 @@ def test_media_and_design():
         if len(youtube_links) != 1:
             failed.append(f'{lesson_file.name}: expected one YouTube recommendation, found {len(youtube_links)}')
 
-    for asset in ['assets/custom.css', 'assets/causal-network-hero.jpg', 'assets/logo.png']:
+    for asset in [
+        'assets/custom.css',
+        'assets/layout-controls.js',
+        'assets/causal-network-hero.jpg',
+        'assets/logo.png',
+    ]:
         if not (PROJECT_DIR / asset).is_file():
             failed.append(f'missing design asset: {asset}')
 
@@ -184,11 +189,31 @@ def test_media_and_design():
         'dark theme': 'html.dark body',
         'mobile layout': '@media (max-width: 767px)',
         'compact mobile outline': 'max-height: 18rem !important',
+        'wider desktop reading grid': '--ci-left-rail-core:',
+        'collapsible desktop rails': 'data-ci-left-hidden',
         'reduced-motion support': '@media (prefers-reduced-motion: no-preference)',
     }
     for feature, marker in design_guards.items():
         if marker not in stylesheet:
             failed.append(f'missing design feature: {feature}')
+
+    layout_controls = PROJECT_DIR / 'assets' / 'layout-controls.js'
+    if layout_controls.is_file():
+        control_source = layout_controls.read_text()
+        for feature, marker in {
+            'persistent navigation rail state': 'ci:left-rail-hidden',
+            'accessible navigation toggle state': "setAttribute('aria-expanded'",
+            'post-hydration navigation control': 'MutationObserver',
+            'pre-React desktop toggle handling': "window.addEventListener('click'",
+        }.items():
+            if marker not in control_source:
+                failed.append(f'missing layout control: {feature}')
+
+    build_postprocessor = (PROJECT_DIR / 'scripts' / 'set-production-origin.mjs').read_text()
+    if 'layout-controls.js' not in build_postprocessor:
+        failed.append('build does not install the desktop layout controls')
+    if 'appendFile' not in build_postprocessor or 'entry.client-' not in build_postprocessor:
+        failed.append('layout controls are not bundled without changing the hydrated document')
 
     if failed:
         for issue in failed:

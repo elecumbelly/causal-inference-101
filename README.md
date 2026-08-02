@@ -9,21 +9,32 @@ downloadable notebooks, and companion practice material.
 
 ## Preview the book locally
 
-Install Jupyter Book 2, change into this directory, and run:
+Use the pinned MyST dependency so the local preview matches Vercel exactly:
 
 ```console
-jupyter-book start
+npm install
+npm run build
+python3 -m http.server 3000 --directory _build/html
 ```
 
-Open the URL printed after `Server started`, normally <http://localhost:3000>.
-Jupyter Book also starts an internal content server, normally on port 3100; that
-second port is expected and is not the website URL.
+Open <http://localhost:3000>. Re-run `npm run build` after changing content or
+layout files, then refresh the browser.
+
+The build briefly starts internal MyST servers on other ports. Those ports are
+expected and are not the website URL.
+
+Jupyter Book 2 can also start an editing server with `jupyter-book start`, but
+the static preview above is the release-equivalent path and includes the custom
+desktop layout controls.
 
 Do not add `.` to the command. In Jupyter Book 2, positional arguments are files
 to export, so `jupyter-book build --html .` attempts to read the directory as a
 file and fails with `EISDIR`.
 
-To produce static HTML in `_build/html`, run:
+If invoking Jupyter Book directly, do not add `.` to the build command. In
+Jupyter Book 2, positional arguments are files to export, so
+`jupyter-book build --html .` attempts to read the directory as a file and
+fails with `EISDIR`. The valid direct command is:
 
 ```console
 jupyter-book build --html
