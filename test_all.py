@@ -178,6 +178,18 @@ def test_media_and_design():
         if not (PROJECT_DIR / asset).is_file():
             failed.append(f'missing design asset: {asset}')
 
+    stylesheet = (PROJECT_DIR / 'assets' / 'custom.css').read_text()
+    design_guards = {
+        'editorial design tokens': '--ci-display:',
+        'dark theme': 'html.dark body',
+        'mobile layout': '@media (max-width: 767px)',
+        'compact mobile outline': 'max-height: 18rem !important',
+        'reduced-motion support': '@media (prefers-reduced-motion: no-preference)',
+    }
+    for feature, marker in design_guards.items():
+        if marker not in stylesheet:
+            failed.append(f'missing design feature: {feature}')
+
     if failed:
         for issue in failed:
             print(f"FAIL: {issue}")
