@@ -160,6 +160,10 @@ html.dark .myst-primary-sidebar-toc a[aria-current="page"] {
   display: none !important;
 }
 
+.myst-fm-downloads-dropdown {
+  display: none !important;
+}
+
 .myst-outline {
   border-left: 1px solid var(--ci-rule);
   border-radius: 0 !important;

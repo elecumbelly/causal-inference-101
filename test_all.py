@@ -193,6 +193,7 @@ def test_media_and_design():
         'collapsible desktop rails': 'data-ci-left-hidden',
         'closed rails reserve no width': '--ci-right-rail-core: 0rem',
         'horizontal Contents chevrons': '.myst-outline-section[data-state="open"] .myst-outline-collapsible svg',
+        'download controls removed': '.myst-fm-downloads-dropdown {\n  display: none !important;',
         'MyST branding removed': '.myst-made-with-myst {\n  display: none !important;',
         'reduced-motion support': '@media (prefers-reduced-motion: no-preference)',
     }
