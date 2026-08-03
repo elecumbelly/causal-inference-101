@@ -1,18 +1,37 @@
 :root {
-  --ci-ink: #122532;
-  --ci-navy: #0b2a3a;
-  --ci-teal: #17887f;
-  --ci-coral: #e7654d;
-  --ci-gold: #dcae4d;
-  --ci-paper: #f7f3e9;
-  --ci-surface: rgb(255 253 247 / 82%);
-  --ci-rule: rgb(18 37 50 / 13%);
-  --ci-muted: #667078;
+  /* CADi canon: WaaS marcomms/brand/DESIGN.md and live cadi.css tokens. */
+  --cadi-core: #5dd5dc;
+  --cadi-crimson: #b51f2e;
+  --cadi-vanta: #000000;
+  --cadi-white: #ffffff;
+  --cadi-light-ground: #c7ccd1;
+  --cadi-light-text: #000000;
+  --cadi-light-text-2: #444444;
+  --cadi-dark-text-2: #b8b8bd;
+  --cadi-dark-text-dim: #7a7a80;
+  --ci-ink: var(--cadi-light-text);
+  --ci-navy: var(--cadi-light-text);
+  --ci-teal: var(--cadi-core);
+  --ci-coral: var(--cadi-core);
+  --ci-gold: var(--cadi-core);
+  --ci-paper: var(--cadi-light-ground);
+  --ci-surface: transparent;
+  --ci-rule: rgb(0 0 0 / 20%);
+  --ci-muted: var(--cadi-light-text-2);
   --ci-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
   --ci-reading: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
   --ci-ui: "Avenir Next", Avenir, "Segoe UI", Helvetica, sans-serif;
   --ci-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  --ci-shadow: 0 1px 1px rgb(20 35 42 / 5%), 0 10px 28px rgb(20 35 42 / 8%);
+  --ci-shadow: 0 1px 1px rgb(0 0 0 / 5%), 0 10px 28px rgb(0 0 0 / 8%);
+}
+
+html.dark {
+  --ci-ink: var(--cadi-white);
+  --ci-navy: var(--cadi-white);
+  --ci-paper: var(--cadi-vanta);
+  --ci-rule: rgb(255 255 255 / 16%);
+  --ci-muted: var(--cadi-dark-text-dim);
+  --ci-shadow: 0 1px 1px rgb(0 0 0 / 20%), 0 10px 28px rgb(0 0 0 / 30%);
 }
 
 html {
@@ -24,42 +43,36 @@ body {
   font-family: var(--ci-ui);
   background-color: var(--ci-paper) !important;
   background-image:
-    radial-gradient(circle at 78% 8%, rgb(23 136 127 / 10%), transparent 27rem),
-    radial-gradient(circle at 18% 82%, rgb(220 174 77 / 8%), transparent 30rem),
-    linear-gradient(rgb(18 37 50 / 2.4%) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(18 37 50 / 2.4%) 1px, transparent 1px);
+    linear-gradient(rgb(0 0 0 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(0 0 0 / 3%) 1px, transparent 1px);
   background-attachment: fixed;
-  background-size: auto, auto, 40px 40px, 40px 40px;
+  background-size: 40px 40px, 40px 40px;
 }
 
 html.dark body {
-  color: #eee9dc;
-  background-color: #111a1d !important;
+  color: var(--cadi-white);
+  background-color: var(--cadi-vanta) !important;
   background-image:
-    radial-gradient(circle at 78% 6%, rgb(54 183 168 / 11%), transparent 29rem),
-    radial-gradient(circle at 14% 86%, rgb(220 174 77 / 7%), transparent 31rem),
     linear-gradient(rgb(255 255 255 / 2.2%) 1px, transparent 1px),
     linear-gradient(90deg, rgb(255 255 255 / 2.2%) 1px, transparent 1px);
 }
 
 ::selection {
-  color: #08181f;
-  background: rgb(220 174 77 / 68%);
+  color: var(--cadi-vanta);
+  background: var(--cadi-core);
 }
 
 /* Navigation: restrained scientific instrument panel. */
 .myst-top-nav {
   min-height: 64px;
-  background:
-    linear-gradient(90deg, rgb(247 243 233 / 96%), rgb(255 253 247 / 91%)) !important;
-  border-bottom: 1px solid rgb(11 42 58 / 14%);
-  box-shadow: 0 8px 30px rgb(11 42 58 / 6%) !important;
+  background: rgb(199 204 209 / 96%) !important;
+  border-bottom: 1px solid rgb(0 0 0 / 20%);
+  box-shadow: 0 8px 30px rgb(0 0 0 / 6%) !important;
 }
 
 html.dark .myst-top-nav {
-  background:
-    linear-gradient(90deg, rgb(12 28 34 / 96%), rgb(18 31 34 / 91%)) !important;
-  border-bottom-color: rgb(229 234 222 / 12%);
+  background: rgb(0 0 0 / 96%) !important;
+  border-bottom-color: rgb(255 255 255 / 16%);
   box-shadow: 0 8px 32px rgb(0 0 0 / 22%) !important;
 }
 
@@ -70,21 +83,20 @@ html.dark .myst-top-nav {
   left: 0;
   height: 2px;
   content: "";
-  background: linear-gradient(90deg, transparent 6%, var(--ci-coral) 24%, var(--ci-gold) 49%, var(--ci-teal) 74%, transparent 94%);
-  opacity: 0.72;
+  background: var(--cadi-core);
 }
 
 .myst-home-link-logo {
-  border: 1px solid rgb(11 42 58 / 12%);
+  border: 1px solid rgb(0 0 0 / 20%);
   border-radius: 3px;
-  background: rgb(255 255 255 / 62%);
-  box-shadow: 0 5px 16px rgb(11 42 58 / 7%);
+  background: rgb(255 255 255 / 46%);
+  box-shadow: 0 5px 16px rgb(0 0 0 / 7%);
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
 .myst-home-link:hover .myst-home-link-logo {
   transform: translateY(-1px) rotate(-1deg);
-  box-shadow: 0 8px 20px rgb(11 42 58 / 12%);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 12%);
 }
 
 html.dark .myst-home-link-logo {
@@ -94,34 +106,34 @@ html.dark .myst-home-link-logo {
 
 .myst-search-bar {
   color: var(--ci-ink) !important;
-  border: 1px solid rgb(11 42 58 / 16%) !important;
+  border: 1px solid rgb(0 0 0 / 20%) !important;
   border-radius: 4px !important;
-  background: rgb(255 253 247 / 74%) !important;
+  background: rgb(255 255 255 / 24%) !important;
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 65%);
   transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
 .myst-search-bar:hover {
   border-color: var(--ci-teal) !important;
-  box-shadow: 0 0 0 3px rgb(23 136 127 / 9%);
+  box-shadow: 0 0 0 3px rgb(93 213 220 / 14%);
   transform: translateY(-1px);
 }
 
 html.dark .myst-search-bar {
-  color: #eee9dc !important;
+  color: var(--cadi-white) !important;
   border-color: rgb(255 255 255 / 14%) !important;
   background: rgb(255 255 255 / 6%) !important;
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%);
 }
 
 .myst-theme-button {
-  border-color: rgb(11 42 58 / 25%) !important;
+  border-color: rgb(0 0 0 / 25%) !important;
   transition: color 180ms ease, background 180ms ease, transform 180ms ease;
 }
 
 .myst-theme-button:hover {
   color: var(--ci-teal) !important;
-  background: rgb(23 136 127 / 9%) !important;
+  background: rgb(93 213 220 / 12%) !important;
   transform: rotate(10deg);
 }
 
@@ -139,21 +151,21 @@ html.dark .myst-search-bar {
 
 .myst-primary-sidebar-toc .myst-toc-item:hover {
   color: var(--ci-teal);
-  border-left-color: rgb(23 136 127 / 48%);
-  background: rgb(23 136 127 / 7%) !important;
+  border-left-color: var(--cadi-core);
+  background: rgb(93 213 220 / 10%) !important;
   transform: translateX(2px);
 }
 
 .myst-primary-sidebar-toc a[aria-current="page"] {
   color: var(--ci-navy) !important;
-  border-left-color: var(--ci-coral);
-  background: linear-gradient(90deg, rgb(231 101 77 / 13%), rgb(220 174 77 / 7%)) !important;
-  box-shadow: inset 0 0 0 1px rgb(231 101 77 / 7%);
+  border-left-color: var(--cadi-core);
+  background: rgb(93 213 220 / 13%) !important;
+  box-shadow: inset 0 0 0 1px rgb(93 213 220 / 18%);
 }
 
 html.dark .myst-primary-sidebar-toc a[aria-current="page"] {
-  color: #fff2d3 !important;
-  background: linear-gradient(90deg, rgb(231 101 77 / 15%), rgb(220 174 77 / 6%)) !important;
+  color: var(--cadi-white) !important;
+  background: rgb(93 213 220 / 13%) !important;
 }
 
 .myst-made-with-myst {
@@ -167,11 +179,11 @@ html.dark .myst-primary-sidebar-toc a[aria-current="page"] {
 .myst-outline {
   border-left: 1px solid var(--ci-rule);
   border-radius: 0 !important;
-  background: linear-gradient(90deg, rgb(255 253 247 / 38%), transparent) !important;
+  background: transparent !important;
 }
 
 html.dark .myst-outline {
-  background: linear-gradient(90deg, rgb(255 255 255 / 3%), transparent) !important;
+  background: transparent !important;
 }
 
 .myst-outline-header {
@@ -194,11 +206,11 @@ html.dark .myst-outline {
 }
 
 html.dark .myst-outline a {
-  color: #b9c8c2;
+  color: var(--cadi-dark-text-2);
 }
 
 html.dark .myst-outline a:hover {
-  color: #80d7ca;
+  color: var(--cadi-core);
 }
 
 /* Editorial reading surface and type system. */
@@ -211,7 +223,7 @@ article.content {
 }
 
 html.dark article.content {
-  color: #e8e5dc;
+  color: var(--cadi-white);
 }
 
 .content .myst-fm-block {
@@ -222,8 +234,7 @@ html.dark article.content {
   border: 1px solid var(--ci-rule);
   border-radius: 3px;
   background:
-    linear-gradient(118deg, rgb(255 253 247 / 88%), rgb(247 243 233 / 63%)),
-    repeating-linear-gradient(90deg, transparent 0 39px, rgb(11 42 58 / 3%) 40px);
+    repeating-linear-gradient(90deg, transparent 0 39px, rgb(0 0 0 / 3%) 40px);
   box-shadow: var(--ci-shadow);
 }
 
@@ -234,7 +245,7 @@ html.dark article.content {
   left: 0;
   height: 5px;
   content: "";
-  background: linear-gradient(90deg, var(--ci-coral), var(--ci-gold) 46%, var(--ci-teal));
+  background: var(--cadi-core);
 }
 
 .content .myst-fm-block::after {
@@ -245,18 +256,17 @@ html.dark article.content {
   height: 12rem;
   pointer-events: none;
   content: "";
-  border: 1px solid rgb(23 136 127 / 17%);
+  border: 1px solid rgb(93 213 220 / 26%);
   border-radius: 50%;
   box-shadow:
-    0 0 0 1.45rem rgb(23 136 127 / 4%),
-    0 0 0 3.1rem rgb(220 174 77 / 3.5%),
-    0 0 0 4.8rem rgb(231 101 77 / 2.5%);
+    0 0 0 1.45rem rgb(93 213 220 / 4%),
+    0 0 0 3.1rem rgb(93 213 220 / 3%),
+    0 0 0 4.8rem rgb(93 213 220 / 2%);
 }
 
 html.dark .content .myst-fm-block {
-  border-color: rgb(238 233 220 / 11%);
+  border-color: rgb(255 255 255 / 16%);
   background:
-    linear-gradient(118deg, rgb(15 35 41 / 89%), rgb(25 34 34 / 73%)),
     repeating-linear-gradient(90deg, transparent 0 39px, rgb(255 255 255 / 2%) 40px);
   box-shadow: 0 18px 46px rgb(0 0 0 / 24%);
 }
@@ -278,7 +288,7 @@ html.dark .content .myst-fm-block {
 
 html.dark .content .myst-fm-block-title,
 html.dark .content h1 {
-  color: #f6e9c9;
+  color: var(--cadi-white);
 }
 
 .myst-fm-author-name,
@@ -290,7 +300,7 @@ html.dark .content h1 {
 
 html.dark .myst-fm-author-name,
 html.dark .myst-fm-block-header {
-  color: #aeb9b4;
+  color: var(--cadi-dark-text-2);
 }
 
 .content h2 {
@@ -310,11 +320,11 @@ html.dark .myst-fm-block-header {
   width: clamp(3.8rem, 14vw, 8rem);
   height: 2px;
   content: "";
-  background: linear-gradient(90deg, var(--ci-coral), var(--ci-gold), var(--ci-teal));
+  background: var(--cadi-core);
 }
 
 html.dark .content h2 {
-  color: #f2e5c4;
+  color: var(--cadi-white);
 }
 
 .content h3,
@@ -329,7 +339,7 @@ html.dark .content h2 {
 html.dark .content h3,
 html.dark .content h4,
 html.dark .content h5 {
-  color: #e9dec5;
+  color: var(--cadi-white);
 }
 
 .content p,
@@ -343,20 +353,25 @@ html.dark .content h5 {
 }
 
 html.dark .content strong {
-  color: #f5ead4;
+  color: var(--cadi-white);
 }
 
 .content a:not(.no-underline) {
-  color: color-mix(in srgb, var(--ci-teal) 84%, var(--ci-navy));
-  text-decoration-color: rgb(23 136 127 / 35%);
+  color: var(--ci-ink);
+  text-decoration-color: var(--cadi-core);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
   transition: color 150ms ease, text-decoration-color 150ms ease;
 }
 
 .content a:not(.no-underline):hover {
-  color: var(--ci-coral);
+  color: var(--ci-ink);
   text-decoration-color: currentColor;
+}
+
+html.dark .content a:not(.no-underline),
+html.dark .content a:not(.no-underline):hover {
+  color: var(--cadi-core);
 }
 
 .content ul > li::marker,
@@ -371,12 +386,12 @@ html.dark .content strong {
   margin: 2.75rem 0 !important;
   padding: 0 !important;
   border: 0;
-  background: linear-gradient(90deg, transparent, rgb(11 42 58 / 20%) 18%, rgb(11 42 58 / 20%) 82%, transparent);
+  background: rgb(0 0 0 / 20%);
   transform: none !important;
 }
 
 html.dark .content hr {
-  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 15%) 18%, rgb(255 255 255 / 15%) 82%, transparent);
+  background: rgb(255 255 255 / 16%);
 }
 
 /* Imagery is treated like a plate in a high-quality print edition. */
@@ -385,12 +400,12 @@ html.dark .content hr {
 }
 
 .content figure img {
-  border: 1px solid rgb(11 42 58 / 12%);
+  border: 1px solid rgb(0 0 0 / 20%);
   border-radius: 3px;
   box-shadow:
-    0 2px 2px rgb(11 42 58 / 5%),
-    0 18px 46px rgb(11 42 58 / 13%),
-    0 0 0 7px rgb(255 253 247 / 52%);
+    0 2px 2px rgb(0 0 0 / 5%),
+    0 18px 46px rgb(0 0 0 / 13%),
+    0 0 0 7px rgb(255 255 255 / 20%);
   transition: filter 320ms ease, transform 320ms ease, box-shadow 320ms ease;
 }
 
@@ -398,9 +413,9 @@ html.dark .content hr {
   filter: saturate(1.05) contrast(1.015);
   transform: translateY(-2px);
   box-shadow:
-    0 2px 2px rgb(11 42 58 / 5%),
-    0 24px 56px rgb(11 42 58 / 17%),
-    0 0 0 7px rgb(255 253 247 / 64%);
+    0 2px 2px rgb(0 0 0 / 5%),
+    0 24px 56px rgb(0 0 0 / 17%),
+    0 0 0 7px rgb(255 255 255 / 30%);
 }
 
 html.dark .content figure img {
@@ -432,7 +447,7 @@ html.dark .content figure img {
   top: 0.75rem;
   left: 0.75rem;
   padding: 0.3rem 0.55rem;
-  color: #fff8e9;
+  color: var(--cadi-white);
   font-family: var(--ci-mono);
   font-size: 0.62rem;
   font-weight: 700;
@@ -440,7 +455,7 @@ html.dark .content figure img {
   content: "SIGNAL / INTERVENTION / EFFECT";
   border: 1px solid rgb(255 255 255 / 30%);
   border-radius: 2px;
-  background: rgb(8 29 38 / 70%);
+  background: rgb(0 0 0 / 78%);
   backdrop-filter: blur(7px);
 }
 
@@ -454,14 +469,14 @@ html.dark .content figure img {
   overflow: hidden;
   border: 1px solid var(--ci-rule);
   background: var(--ci-surface);
-  box-shadow: 0 9px 28px rgb(11 42 58 / 7%);
+  box-shadow: 0 9px 28px rgb(0 0 0 / 7%);
   font-family: var(--ci-ui);
   font-size: 0.9rem;
 }
 
 .content thead {
-  color: #fff8e9;
-  background: linear-gradient(105deg, var(--ci-navy), #114755);
+  color: var(--cadi-white);
+  background: var(--cadi-vanta);
 }
 
 .content th {
@@ -472,7 +487,7 @@ html.dark .content figure img {
 }
 
 .content tbody tr:nth-child(even) {
-  background: rgb(23 136 127 / 4.5%);
+  background: rgb(0 0 0 / 4%);
 }
 
 .content tbody tr {
@@ -480,7 +495,7 @@ html.dark .content figure img {
 }
 
 .content tbody tr:hover {
-  background: rgb(220 174 77 / 10%);
+  background: rgb(93 213 220 / 12%);
 }
 
 html.dark .content table {
@@ -493,18 +508,18 @@ html.dark .content table {
   margin-block: 2rem;
   overflow: hidden;
   color: color-mix(in srgb, var(--ci-ink) 85%, var(--ci-teal));
-  border: 1px solid rgb(231 101 77 / 18%);
-  border-left: 4px solid var(--ci-coral);
+  border: 1px solid rgb(93 213 220 / 30%);
+  border-left: 4px solid var(--cadi-core);
   border-radius: 2px;
-  background: linear-gradient(110deg, rgb(231 101 77 / 9%), rgb(220 174 77 / 5%) 62%, transparent);
-  box-shadow: 0 8px 22px rgb(11 42 58 / 5%);
+  background: rgb(93 213 220 / 9%);
+  box-shadow: 0 8px 22px rgb(0 0 0 / 5%);
 }
 
 .content blockquote::after {
   position: absolute;
   top: -1.5rem;
   right: 0.65rem;
-  color: rgb(231 101 77 / 11%);
+  color: rgb(93 213 220 / 18%);
   font-family: var(--ci-display);
   font-size: 8rem;
   line-height: 1;
@@ -512,10 +527,10 @@ html.dark .content table {
 }
 
 html.dark .content blockquote {
-  color: #ece4d4;
-  border-color: rgb(231 101 77 / 20%);
-  border-left-color: var(--ci-coral);
-  background: linear-gradient(110deg, rgb(231 101 77 / 11%), rgb(220 174 77 / 5%) 62%, transparent);
+  color: var(--cadi-white);
+  border-color: rgb(93 213 220 / 30%);
+  border-left-color: var(--cadi-core);
+  background: rgb(93 213 220 / 9%);
 }
 
 .content code {
@@ -525,17 +540,17 @@ html.dark .content blockquote {
 
 .content :not(pre) > code {
   padding: 0.12rem 0.32rem;
-  color: color-mix(in srgb, var(--ci-coral) 78%, var(--ci-navy));
-  border: 1px solid rgb(231 101 77 / 15%);
+  color: var(--ci-ink);
+  border: 1px solid rgb(93 213 220 / 40%);
   border-radius: 2px;
-  background: rgb(231 101 77 / 7%);
+  background: rgb(93 213 220 / 12%);
 }
 
 .content pre {
   border: 1px solid rgb(255 255 255 / 8%);
   border-top: 3px solid var(--ci-teal);
   border-radius: 3px;
-  box-shadow: 0 14px 35px rgb(11 42 58 / 12%);
+  box-shadow: 0 14px 35px rgb(0 0 0 / 12%);
   font-size: 0.84rem;
   line-height: 1.55;
 }
@@ -547,26 +562,26 @@ html.dark .content blockquote {
 .admonition {
   overflow: hidden;
   border-radius: 3px !important;
-  box-shadow: 0 8px 24px rgb(11 42 58 / 5%);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 5%);
 }
 
 .admonition.tip {
   border-color: var(--ci-teal);
-  background: rgb(23 136 127 / 7%);
+  background: rgb(93 213 220 / 10%);
 }
 
 .myst-footer-link {
   border-color: var(--ci-rule) !important;
   border-radius: 3px !important;
-  background: rgb(255 253 247 / 44%);
+  background: rgb(255 255 255 / 18%);
   box-shadow: none !important;
   transition: color 180ms ease, border-color 180ms ease, background 180ms ease, transform 180ms ease !important;
 }
 
 .myst-footer-link:hover {
   color: var(--ci-teal) !important;
-  border-color: rgb(23 136 127 / 42%) !important;
-  background: rgb(23 136 127 / 6%);
+  border-color: rgb(93 213 220 / 54%) !important;
+  background: rgb(93 213 220 / 10%);
   transform: translateY(-2px);
 }
 
@@ -631,14 +646,14 @@ html.dark .myst-footer-link {
   .myst-top-nav-menu-button {
     border: 1px solid var(--ci-rule);
     border-radius: 3px;
-    background: rgb(255 253 247 / 54%);
+    background: rgb(255 255 255 / 18%);
     transition: color 160ms ease, border-color 160ms ease, background 160ms ease, transform 160ms ease;
   }
 
   .myst-top-nav-menu-button:hover {
     color: var(--ci-teal) !important;
-    border-color: rgb(23 136 127 / 42%);
-    background: rgb(23 136 127 / 8%);
+    border-color: rgb(93 213 220 / 54%);
+    background: rgb(93 213 220 / 12%);
     transform: translateX(-1px);
   }
 
@@ -651,12 +666,12 @@ html.dark .myst-footer-link {
     padding: 1.6rem 0.25rem;
     font-size: 0.82rem;
     border-right: 1px solid var(--ci-rule);
-    background: linear-gradient(90deg, rgb(255 253 247 / 18%), rgb(255 253 247 / 48%));
+    background: rgb(255 255 255 / 12%);
     transition: opacity 180ms ease, transform 220ms ease;
   }
 
   html.dark .myst-primary-sidebar-nav {
-    background: linear-gradient(90deg, rgb(255 255 255 / 1%), rgb(255 255 255 / 3.2%));
+    background: rgb(255 255 255 / 2%);
   }
 
   html:has(.myst-top-nav-menu-button[data-ci-left-hidden="true"]) .myst-primary-sidebar-pointer {
@@ -709,7 +724,7 @@ html.dark .myst-footer-link {
 
   html.dark .myst-outline-section[data-state="closed"] .myst-outline-collapsible {
     border-color: rgb(255 255 255 / 14%);
-    background: #111a1d;
+    background: var(--cadi-vanta);
   }
 
   .myst-outline-collapsible {
@@ -728,18 +743,18 @@ html.dark .myst-footer-link {
 
   .myst-outline-collapsible:hover {
     color: var(--ci-teal);
-    background: rgb(23 136 127 / 9%);
+    background: rgb(93 213 220 / 12%);
   }
 }
 
 @media (max-width: 1279px) {
   .myst-primary-sidebar {
     background: var(--ci-paper);
-    box-shadow: 18px 0 48px rgb(11 42 58 / 18%);
+    box-shadow: 18px 0 48px rgb(0 0 0 / 18%);
   }
 
   html.dark .myst-primary-sidebar {
-    background: #111a1d;
+    background: var(--cadi-vanta);
   }
 }
 
@@ -747,7 +762,7 @@ html.dark .myst-footer-link {
   html,
   body {
     overflow-x: clip;
-    background-size: auto, auto, 28px 28px, 28px 28px;
+    background-size: 28px 28px, 28px 28px;
   }
 
   article.content {
@@ -784,14 +799,14 @@ html.dark .myst-footer-link {
     margin-inline: 0.25rem !important;
     overflow-y: auto !important;
     border: 1px solid var(--ci-rule);
-    border-left: 3px solid rgb(23 136 127 / 42%);
-    background: rgb(255 253 247 / 74%) !important;
-    box-shadow: 0 10px 28px rgb(11 42 58 / 7%);
+    border-left: 3px solid var(--cadi-core);
+    background: rgb(255 255 255 / 18%) !important;
+    box-shadow: 0 10px 28px rgb(0 0 0 / 7%);
   }
 
   html.dark .myst-outline {
     border-color: rgb(255 255 255 / 10%);
-    border-left-color: rgb(54 183 168 / 55%);
+    border-left-color: var(--cadi-core);
     background: rgb(255 255 255 / 3.5%) !important;
   }
 

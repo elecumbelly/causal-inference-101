@@ -185,6 +185,10 @@ def test_media_and_design():
 
     stylesheet = (PROJECT_DIR / 'assets' / 'custom.css').read_text()
     design_guards = {
+        'CADi Core cyan token': '--cadi-core: #5dd5dc;',
+        'CADi vanta ground token': '--cadi-vanta: #000000;',
+        'CADi light ground token': '--cadi-light-ground: #c7ccd1;',
+        'CADi light wordmark token': '--cadi-crimson: #b51f2e;',
         'editorial design tokens': '--ci-display:',
         'dark theme': 'html.dark body',
         'mobile layout': '@media (max-width: 767px)',
@@ -202,6 +206,10 @@ def test_media_and_design():
     for feature, marker in design_guards.items():
         if marker not in stylesheet:
             failed.append(f'missing design feature: {feature}')
+
+    for retired_colour in ['#0b2a3a', '#17887f', '#e7654d', '#dcae4d', '#f7f3e9', '#111a1d']:
+        if retired_colour in stylesheet.lower():
+            failed.append(f'retired pre-CADi colour remains: {retired_colour}')
 
     layout_controls = PROJECT_DIR / 'assets' / 'layout-controls.js'
     if layout_controls.is_file():
