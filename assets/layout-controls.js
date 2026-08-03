@@ -1,18 +1,20 @@
 (() => {
   const desktop = window.matchMedia('(min-width: 1280px)');
-  const stateKey = 'ci:left-rail-hidden';
+  const navigationStateKey = 'ci:left-rail-hidden';
+  const outlineStateKey = 'ci:right-rail-closed';
 
-  function readStoredState() {
+  function readStoredState(key, fallback) {
     try {
-      return window.localStorage.getItem(stateKey) === 'true';
+      const stored = window.localStorage.getItem(key);
+      return stored === null ? fallback : stored === 'true';
     } catch {
-      return false;
+      return fallback;
     }
   }
 
-  function storeState(hidden) {
+  function storeState(key, value) {
     try {
-      window.localStorage.setItem(stateKey, String(hidden));
+      window.localStorage.setItem(key, String(value));
     } catch {
       // The control still works when storage is blocked or unavailable.
     }
@@ -28,7 +30,7 @@
 
     const label = button.querySelector('.sr-only');
     if (label) label.textContent = hidden ? 'Show navigation' : 'Hide navigation';
-    if (persist) storeState(hidden);
+    if (persist) storeState(navigationStateKey, hidden);
   }
 
   function restoreMobileState(button) {
@@ -48,22 +50,51 @@
     if (!button || !sidebar || button.dataset.ciLayoutControl === 'true') return;
 
     button.dataset.ciLayoutControl = 'true';
-    if (desktop.matches) applyDesktopState(button, sidebar, readStoredState(), false);
+    if (desktop.matches) applyDesktopState(button, sidebar, readStoredState(navigationStateKey, true), false);
   }
 
-  function handleNavigationClick(event) {
+  function installOutlineToggle() {
+    const section = document.querySelector('.myst-outline-section');
+    const button = section?.querySelector('.myst-outline-collapsible');
+    if (!section || !button || button.dataset.ciOutlineControl === 'true') return;
+
+    button.dataset.ciOutlineControl = 'true';
+    if (!desktop.matches) return;
+
+    const shouldClose = readStoredState(outlineStateKey, true);
+    const isClosed = section.dataset.state === 'closed';
+    if (shouldClose !== isClosed) window.setTimeout(() => button.click(), 0);
+  }
+
+  function installLayoutControls() {
+    installNavigationToggle();
+    installOutlineToggle();
+  }
+
+  function handleLayoutClick(event) {
     if (!desktop.matches || !(event.target instanceof Element)) return;
 
     const button = event.target.closest('.myst-top-nav-menu-button');
     const sidebar = document.querySelector('.myst-primary-sidebar');
-    if (!button || !sidebar) return;
+    if (button && sidebar) {
+      // Capture on window before React's document listener. At desktop widths
+      // this button controls the persistent rail, not MyST's mobile drawer.
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      applyDesktopState(button, sidebar, button.dataset.ciLeftHidden !== 'true');
+      return;
+    }
 
-    // Capture on window before React's document listener. At desktop widths
-    // this button controls the persistent rail, not MyST's mobile drawer.
-    event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation();
-    applyDesktopState(button, sidebar, button.dataset.ciLeftHidden !== 'true');
+    const outlineButton = event.target.closest('.myst-outline-collapsible');
+    if (!outlineButton) return;
+
+    // MyST owns the Contents animation. Record its resulting state after React
+    // handles the click so the preference survives navigation and reloads.
+    window.setTimeout(() => {
+      const section = outlineButton.closest('.myst-outline-section');
+      if (section) storeState(outlineStateKey, section.dataset.state === 'closed');
+    }, 0);
   }
 
   function syncBreakpoint() {
@@ -73,19 +104,20 @@
 
     if (button.dataset.ciLayoutControl !== 'true') installNavigationToggle();
     if (desktop.matches) {
-      applyDesktopState(button, sidebar, readStoredState(), false);
+      applyDesktopState(button, sidebar, readStoredState(navigationStateKey, true), false);
+      installOutlineToggle();
     } else {
       restoreMobileState(button);
     }
   }
 
   function start() {
-    installNavigationToggle();
-    window.addEventListener('click', handleNavigationClick, true);
+    installLayoutControls();
+    window.addEventListener('click', handleLayoutClick, true);
 
     // MyST can replace the header during client-side navigation. Reinstall the
     // control on that fresh button instead of binding only to the discarded one.
-    const hydrationObserver = new MutationObserver(installNavigationToggle);
+    const hydrationObserver = new MutationObserver(installLayoutControls);
     hydrationObserver.observe(document.body, { childList: true, subtree: true });
     desktop.addEventListener('change', syncBreakpoint);
     window.addEventListener('pagehide', () => hydrationObserver.disconnect(), { once: true });

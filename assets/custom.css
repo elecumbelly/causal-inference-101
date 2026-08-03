@@ -578,7 +578,7 @@ html.dark .myst-footer-link {
   html {
     --ci-outer-track: 0rem;
     --ci-left-rail-core: 7rem;
-    --ci-right-rail-core: 7rem;
+    --ci-right-rail-core: 10rem;
   }
 
   /*
@@ -744,13 +744,24 @@ html.dark .myst-footer-link {
 }
 
 @media (max-width: 767px) {
+  html,
   body {
+    overflow-x: clip;
     background-size: auto, auto, 28px 28px, 28px 28px;
   }
 
   article.content {
+    min-width: 0;
     font-size: 1rem;
     line-height: 1.7;
+  }
+
+  article.content pre,
+  article.content .highlight,
+  article.content math[display="block"] {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
 
   .content .myst-fm-block {
