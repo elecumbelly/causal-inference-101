@@ -227,6 +227,7 @@ def test_media_and_design():
             'post-hydration navigation control': 'MutationObserver',
             'pre-React desktop toggle handling': "window.addEventListener('click'",
             'persistent mobile Contents state': 'scheduleOutlinePersistence(outlineButton)',
+            'stable Contents control across MyST rerenders': "section.dataset.ciOutlineControl = 'true'",
         }.items():
             if marker not in control_source:
                 failed.append(f'missing layout control: {feature}')

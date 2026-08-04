@@ -56,9 +56,11 @@
   function installOutlineToggle() {
     const section = document.querySelector('.myst-outline-section');
     const button = section?.querySelector('.myst-outline-collapsible');
-    if (!section || !button || button.dataset.ciOutlineControl === 'true') return;
+    if (!section || !button || section.dataset.ciOutlineControl === 'true') return;
 
-    button.dataset.ciOutlineControl = 'true';
+    // Keep the marker on the stable section: MyST replaces the button when its
+    // open state changes, which would otherwise re-run the default-state logic.
+    section.dataset.ciOutlineControl = 'true';
     const shouldClose = readStoredState(outlineStateKey, true);
     const isClosed = section.dataset.state === 'closed';
     if (shouldClose !== isClosed) window.setTimeout(() => button.click(), 0);
