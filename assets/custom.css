@@ -759,16 +759,47 @@ html.dark .myst-footer-link {
 }
 
 @media (max-width: 767px) {
+  :root {
+    --ci-mobile-gutter: 1rem;
+  }
+
+  html {
+    scroll-padding-top: calc(4.25rem + env(safe-area-inset-top));
+  }
+
   html,
   body {
     overflow-x: clip;
-    background-size: 28px 28px, 28px 28px;
+    background-size: 24px 24px, 24px 24px;
+  }
+
+  .myst-top-nav {
+    min-height: calc(3.75rem + env(safe-area-inset-top));
+    padding: calc(0.5rem + env(safe-area-inset-top)) 0.75rem 0.5rem !important;
+  }
+
+  .myst-top-nav-bar {
+    min-height: 44px;
+  }
+
+  .myst-top-nav-menu-button,
+  .myst-theme-button,
+  .myst-search-bar,
+  .myst-home-link-logo {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .myst-home-link-logo {
+    display: grid;
+    place-items: center;
+    margin-right: 0 !important;
   }
 
   article.content {
     min-width: 0;
-    font-size: 1rem;
-    line-height: 1.7;
+    font-size: 1.05rem;
+    line-height: 1.68;
   }
 
   article.content pre,
@@ -780,23 +811,128 @@ html.dark .myst-footer-link {
   }
 
   .content .myst-fm-block {
-    padding: 2.5rem 1.2rem 1.5rem;
-    margin-top: 1rem;
+    padding: 2.75rem calc(var(--ci-mobile-gutter) + 0.5rem) 1.6rem;
+    margin: 0.75rem calc(-1 * var(--ci-mobile-gutter)) 2.25rem;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+  }
+
+  .content .myst-fm-block::after {
+    top: -3.2rem;
+    right: -3.6rem;
+    width: 10rem;
+    height: 10rem;
   }
 
   .content .myst-fm-block-title,
   .content h1 {
-    font-size: clamp(2.35rem, 14vw, 3.4rem);
+    max-width: 9ch;
+    font-size: clamp(2.75rem, 12.8vw, 3.2rem);
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+  }
+
+  .myst-fm-author-name,
+  .myst-fm-block-header {
+    font-size: 0.72rem;
+    line-height: 1.35;
+    letter-spacing: 0.04em;
   }
 
   .content h2 {
-    margin-top: 2.7rem;
+    padding-bottom: 0.65rem;
+    margin-top: 3rem;
+    font-size: clamp(1.85rem, 8vw, 2.15rem);
+    line-height: 1.05;
+  }
+
+  .content h3,
+  .content h4,
+  .content h5 {
+    margin-top: 2.1rem;
+    line-height: 1.2;
+  }
+
+  .content ul,
+  .content ol {
+    padding-left: 1.35rem;
+  }
+
+  .content li + li {
+    margin-top: 0.35rem;
+  }
+
+  .content figure {
+    margin-block: 1.75rem 2.25rem;
+    margin-inline: calc(-1 * var(--ci-mobile-gutter));
+  }
+
+  .content figure img,
+  html.dark .content figure img,
+  .content figure:hover img {
+    width: 100%;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+    box-shadow: 0 12px 32px rgb(0 0 0 / 14%);
+    transform: none;
+  }
+
+  .content figcaption {
+    max-width: none;
+    padding-inline: var(--ci-mobile-gutter);
+    margin-top: 0.75rem;
+    font-size: 0.76rem;
+    text-align: left;
+  }
+
+  #causal-network-hero img {
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: 52% center;
+  }
+
+  .content .table-content {
+    max-width: calc(100vw - (2 * var(--ci-mobile-gutter)));
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-right: 1px solid var(--ci-rule);
+  }
+
+  .content table {
+    min-width: 32rem;
+    font-size: 0.82rem;
+  }
+
+  .content th,
+  .content td {
+    padding: 0.65rem 0.75rem;
+  }
+
+  .content blockquote {
+    padding: 1.15rem 1rem 1.1rem 1.35rem;
+    margin-block: 1.75rem;
+  }
+
+  .content blockquote::after {
+    top: -0.9rem;
+    font-size: 5rem;
+  }
+
+  .content pre {
+    margin-inline: calc(-0.25 * var(--ci-mobile-gutter));
+    border-radius: 0;
+  }
+
+  .admonition {
+    margin-inline: -0.25rem;
   }
 
   .myst-outline {
     max-height: 18rem !important;
-    padding: 0.9rem 0.85rem !important;
-    margin-inline: 0.25rem !important;
+    padding: 0.4rem 0.5rem !important;
+    margin: 1rem 0 2rem !important;
     overflow-y: auto !important;
     border: 1px solid var(--ci-rule);
     border-left: 3px solid var(--cadi-core);
@@ -804,10 +940,40 @@ html.dark .myst-footer-link {
     box-shadow: 0 10px 28px rgb(0 0 0 / 7%);
   }
 
+  .myst-outline-header {
+    min-height: 44px;
+  }
+
+  .myst-outline-collapsible {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
   html.dark .myst-outline {
     border-color: rgb(255 255 255 / 10%);
     border-left-color: var(--cadi-core);
     background: rgb(255 255 255 / 3.5%) !important;
+  }
+
+  .myst-primary-sidebar {
+    width: min(84vw, 22rem) !important;
+    max-width: none !important;
+    padding-bottom: env(safe-area-inset-bottom);
+    border-right: 1px solid var(--cadi-core);
+  }
+
+  .myst-primary-sidebar-nav {
+    padding: 1rem 0.75rem 2rem;
+  }
+
+  .myst-primary-sidebar-toc a,
+  .myst-primary-sidebar-toc button {
+    min-height: 44px;
+  }
+
+  .myst-footer-link {
+    min-height: 4.5rem;
+    padding: 1rem;
   }
 
   #causal-network-hero::before {

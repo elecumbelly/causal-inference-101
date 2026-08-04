@@ -59,11 +59,18 @@
     if (!section || !button || button.dataset.ciOutlineControl === 'true') return;
 
     button.dataset.ciOutlineControl = 'true';
-    if (!desktop.matches) return;
-
     const shouldClose = readStoredState(outlineStateKey, true);
     const isClosed = section.dataset.state === 'closed';
     if (shouldClose !== isClosed) window.setTimeout(() => button.click(), 0);
+  }
+
+  function scheduleOutlinePersistence(outlineButton) {
+    // MyST owns the Contents animation. Record its resulting state after React
+    // handles the click so the preference survives navigation and reloads.
+    window.setTimeout(() => {
+      const section = outlineButton.closest('.myst-outline-section');
+      if (section) storeState(outlineStateKey, section.dataset.state === 'closed');
+    }, 0);
   }
 
   function installLayoutControls() {
@@ -72,7 +79,15 @@
   }
 
   function handleLayoutClick(event) {
-    if (!desktop.matches || !(event.target instanceof Element)) return;
+    if (!(event.target instanceof Element)) return;
+
+    const outlineButton = event.target.closest('.myst-outline-collapsible');
+    if (outlineButton) {
+      scheduleOutlinePersistence(outlineButton);
+      return;
+    }
+
+    if (!desktop.matches) return;
 
     const button = event.target.closest('.myst-top-nav-menu-button');
     const sidebar = document.querySelector('.myst-primary-sidebar');
@@ -83,18 +98,7 @@
       event.stopPropagation();
       event.stopImmediatePropagation();
       applyDesktopState(button, sidebar, button.dataset.ciLeftHidden !== 'true');
-      return;
     }
-
-    const outlineButton = event.target.closest('.myst-outline-collapsible');
-    if (!outlineButton) return;
-
-    // MyST owns the Contents animation. Record its resulting state after React
-    // handles the click so the preference survives navigation and reloads.
-    window.setTimeout(() => {
-      const section = outlineButton.closest('.myst-outline-section');
-      if (section) storeState(outlineStateKey, section.dataset.state === 'closed');
-    }, 0);
   }
 
   function syncBreakpoint() {

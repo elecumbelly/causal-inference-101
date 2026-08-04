@@ -192,6 +192,11 @@ def test_media_and_design():
         'editorial design tokens': '--ci-display:',
         'dark theme': 'html.dark body',
         'mobile layout': '@media (max-width: 767px)',
+        'mobile spacing token': '--ci-mobile-gutter: 1rem;',
+        'mobile safe-area support': 'env(safe-area-inset-top)',
+        'mobile touch targets': 'min-height: 44px;',
+        'mobile edge-to-edge figures': 'margin-inline: calc(-1 * var(--ci-mobile-gutter));',
+        'mobile table scrolling': '-webkit-overflow-scrolling: touch;',
         'compact mobile outline': 'max-height: 18rem !important',
         'widescreen desktop reading grid': '--ci-outer-track: 0rem',
         'collapsible desktop rails': 'data-ci-left-hidden',
@@ -221,6 +226,7 @@ def test_media_and_design():
             'accessible navigation toggle state': "setAttribute('aria-expanded'",
             'post-hydration navigation control': 'MutationObserver',
             'pre-React desktop toggle handling': "window.addEventListener('click'",
+            'persistent mobile Contents state': 'scheduleOutlinePersistence(outlineButton)',
         }.items():
             if marker not in control_source:
                 failed.append(f'missing layout control: {feature}')
